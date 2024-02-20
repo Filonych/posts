@@ -4,12 +4,12 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import { Posts } from './pages/posts/index';
-import { DetailPost } from './pages/posts/detail/index';
-import { EditPost } from './pages/posts/edit/index';
-import { AddPost } from './pages/posts/add/index';
-import { Auth } from './pages/auth/index';
-import { Registration } from './pages/registration/index';
+import { PostsPage } from './pages/posts/index';
+import { DetailPostPage } from './pages/posts/detail/index';
+import { EditPostPage } from './pages/posts/edit/index';
+import { AddPostPage } from './pages/posts/add/index';
+import { AuthPage } from './pages/auth/index';
+import { RegistrationPage } from './pages/registration/index';
 import { Root } from './components/Root';
 import './index.css';
 import App from './App';
@@ -28,27 +28,27 @@ const router = createBrowserRouter([
     },
     {
       path: 'posts',
-      element: <Posts />,
+      element: <PostsPage />,
     },
     {
       path: 'posts/:id',
-      element: <DetailPost />,
+      element: <DetailPostPage />,
     },
     {
       path: 'posts/:id/edit',
-      element: <EditPost />,
+      element: <EditPostPage />,
     },
     {
       path: 'posts/add',
-      element: <AddPost />,
+      element: <AddPostPage />,
     },
     {
       path: 'auth',
-      element: <Auth />,
+      element: <AuthPage />,
     },
     {
       path: 'registration',
-      element: <Registration />,
+      element: <RegistrationPage />,
     },]
   },
 ]);
