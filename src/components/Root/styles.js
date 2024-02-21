@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
 export const Menu = styled.div`
@@ -9,16 +8,3 @@ export const Menu = styled.div`
     max-width: 500px;
     margin: 0 auto;
 `;
-
-export const MenuItem = styled(NavLink)`
-    font-size: 16px;
-    text-decoration: none;
-    color: black;
-
-    &.active {
-        color: #00bcd4;
-    }
-    
-    &: hover {
-        text-decoration: underline;
-    }`
