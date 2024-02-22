@@ -41,7 +41,10 @@ const initialState = {
         text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed egestas ornare est in lobortis. Donec varius, dui et consequat bibendum, odio erat hendrerit sem, eu placerat tellus purus a nunc. Vestibulum interdum elit eget erat accumsan dictum. Integer et aliquet lacus. Ut et consectetur felis. Nunc feugiat luctus nisl. Sed venenatis lobortis justo nec eleifend. Nulla diam tellus, blandit vitae ullamcorper non, ornare eu erat. Donec in dui in libero.'
     },
   ],
-  postForView: null,
+  postForView: {
+    post: null,
+    loading: false
+  },
   freshPosts: null,
 }
 
@@ -63,8 +66,16 @@ export const postsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getPostById.fulfilled, (state, action) => {
-      state.postForView = action.payload
+    builder.addCase(getPostById.pending, (state) => {
+      state.postForView = {
+        post: null,
+        loading: true,
+      }
+    }).addCase(getPostById.fulfilled, (state, action) => {
+      state.postForView = {
+        post: action.payload,
+        loading: false,
+      }
     })
   },
 })

@@ -13,20 +13,28 @@ export const DetailPostPage = () => {
     const postForView = useSelector((state) => state.posts.postForView)
     const dispatch = useDispatch()
 
+    const { post, loading } = postForView
+
     useEffect(() => {
         dispatch(getPostById(Number(id)))
         console.log(postForView)
     }, [id])
 
-    if (!postForView) {
-        return <>Пост не найден</>
-
+    if (loading) {
+        return <Container>
+            Loading...
+        </Container>
     }
+
+    if (!post) {
+        return <>Пост не найден</>
+    }
+
     return(
         <Container>
-            <Typo>{postForView.title}</Typo>
-            <SC.Image src={postForView.image} alt={postForView.title} />
-            <SC.Text>{postForView.text}</SC.Text>
+            <Typo>{post.title}</Typo>
+            {post.image && <SC.Image src={post.image} alt={post.title} />}            
+            <SC.Text>{post.body}</SC.Text>
             <div style={{ clear: 'both'}} />
             <SC.LinkWrapper>
                 <Link to='/posts'>Обратно к публикациям</Link>                
