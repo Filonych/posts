@@ -6,14 +6,17 @@ import { Container } from "../../../components/Container";
 import * as SC from './styles';
 import { Link } from "../../../components/Link";
 import { useDispatch, useSelector } from "react-redux";
-import { getPost } from "../../../redux/slices/postsSlice";
+import { getPostById } from "../../../redux/slices/postsSlice";
 
 export const DetailPostPage = () => {
     const { id } = useParams();
     const postForView = useSelector((state) => state.posts.postForView)
     const dispatch = useDispatch()
 
-    useEffect(() => {dispatch(getPost(Number(id)))}, [id])
+    useEffect(() => {
+        dispatch(getPostById(Number(id)))
+        console.log(postForView)
+    }, [id])
 
     if (!postForView) {
         return <>Пост не найден</>

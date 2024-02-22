@@ -1,4 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { postsAPI } from '../../api/postsAPI'
+
+export const getPostById = createAsyncThunk(
+  'posts/fetchbyId',
+  async (postId) => {
+    return await postsAPI.fetchbyId(postId)
+  },
+)
 
 const initialState = {
   list: [
@@ -47,16 +55,17 @@ export const postsSlice = createSlice({
     editPost: (state, action) => {
         
     }, 
-    getPost: (state, action) => {
-      state.postForView = state.list.find((item) => item.id === action.payload)
-        
-    }, 
     addPosts: (state, action) => {
         
     },  
     getFreshPosts: (state) => {
       state.freshPosts = state.list.slice(0, 3)
-    }
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getPostById.fulfilled, (state, action) => {
+      state.postForView = action.payload
+    })
   },
 })
 
