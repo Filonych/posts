@@ -22,10 +22,10 @@ export const MainPage = () => {
                 <Posts posts={freshPosts} />
             </>}
             
-            {postForView &&
+            {postForView.post &&
             <>
                 <Typo>Последний просмотренный пост</Typo>
-                <Posts posts={[postForView]} />
+                <Posts posts={[postForView.post]} />
             </>
             }
         </Container>
