@@ -1,23 +1,12 @@
-import styled, { css } from "styled-components"
-import { NavLink, Link } from "react-router-dom"
-
-const LinkStyle = css`
-    color: black;
-    text-decoration: none;
-
-    &:hover {
-        color: #00bcd4;
-        text-decoration: underline;
-    }
-`
+import styled from "styled-components"
+import { Link } from "react-router-dom"
 
 export const SimpleLink = styled(Link)`
-    ${LinkStyle}
-`
+color: black;
+text-decoration: none;
 
-export const NavigationLink = styled(NavLink)`
-    ${LinkStyle}
-    &.active {
-        color: #00bcd4;
-    }
+&:hover {
+    color: #00bcd4;
+    text-decoration: underline;
+}
 `

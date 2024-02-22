@@ -1,32 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Posts } from '../../components/Posts';
 import { Container } from "../../components/Container";
 import { Typo } from "../../components/Typo";
+import { useSelector, useDispatch } from 'react-redux'
+import { getFreshPosts } from "../../redux/slices/postsSlice";
 
-const INITIAL_POSTS = [
-    {
-        id: 1,
-        title: 'Post 1',
-        image: 'https://img.freepik.com/premium-photo/fantasy-rainbow-landscape-beautiful-minimalist-rainbow-in-sky-illustration-generative-ai_691560-8602.jpg',
-    },
-    {
-        id: 2,
-        title: 'Post 2',
-        image: 'https://img.freepik.com/premium-photo/fantasy-rainbow-landscape-beautiful-minimalist-rainbow-in-sky-illustration-generative-ai_691560-8602.jpg',
-    },
-    {
-        id: 3,
-        title: 'Post 3',
-        image: 'https://img.freepik.com/premium-photo/fantasy-rainbow-landscape-beautiful-minimalist-rainbow-in-sky-illustration-generative-ai_691560-8602.jpg',
-    },
-  ]
 
-export const MainPage = () => (
-    <>
-        <Typo>Свежие публикации</Typo>
+export const MainPage = () => {
+    const postForView = useSelector((state) => state.posts.postForView)
+    const freshPosts = useSelector((state) => state.posts.freshPosts)
+    const dispatch = useDispatch()
+
+    useEffect(() => {dispatch(getFreshPosts())}, [])
+
+
+    return(
+        <>
         <Container>
-            <Posts posts={INITIAL_POSTS} />
+            {freshPosts && <>
+                <Typo>Свежие публикации</Typo>        
+                <Posts posts={freshPosts} />
+            </>}
+            
+            {postForView &&
+            <>
+                <Typo>Последний просмотренный пост</Typo>
+                <Posts posts={[postForView]} />
+            </>
+            }
         </Container>
         
     </>
-)
+    )
+}
