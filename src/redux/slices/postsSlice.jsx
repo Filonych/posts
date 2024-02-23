@@ -54,12 +54,19 @@ export const postsSlice = createSlice({
         newPost.id = new Date().getTime()
         state.posts.list = state.posts.list ? [newPost, ...state.posts.list] : [newPost]
     },  
-    ShowPost: (state, action) => {
+    showPost: (state, action) => {
       state.postForView = {
         post: action.payload,
         loading: false,
       }
-  },
+    },
+    deletePost: (state, action) => {
+      state.posts.list = state.posts.list.filter((post) => post.id !== action.payload.id)
+      state.postForView = {
+        post: null,
+        loading: false,
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPosts.pending, (state) => {
@@ -96,6 +103,6 @@ export const postsSlice = createSlice({
   },
 })
 
-export const { editPost, addPost, ShowPost } = postsSlice.actions
+export const { editPost, addPost, showPost, deletePost } = postsSlice.actions
 
 export default postsSlice.reducer
