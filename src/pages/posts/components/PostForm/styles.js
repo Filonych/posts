@@ -34,4 +34,9 @@ export const Button = styled.button`
     &:hover {
         background: #21a6b7;
     }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: default;
+    }
 `
