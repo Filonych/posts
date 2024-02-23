@@ -17,7 +17,6 @@ export const DetailPostPage = () => {
 
     useEffect(() => {
         dispatch(getPostById(Number(id)))
-        console.log(postForView)
     }, [id])
 
     if (loading) {
