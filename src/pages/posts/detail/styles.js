@@ -11,8 +11,11 @@ export const Text = styled.div`
     font-size: 15px;
 `
 
-export const LinkWrapper = styled.div`
-    text-align: center;
+export const LinkWrapper = styled.div`    
     margin: 15px 0 0 0;
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    justify-content: center;
 `
 
