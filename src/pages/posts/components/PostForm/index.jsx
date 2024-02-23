@@ -1,5 +1,7 @@
 import React from "react";
 import { Container } from "../../../../components/Container";
+import { Typo } from "../../../../components/Typo";
+import * as SC from './styles'
 
 export const PostForm = () => {
     const onSubmit = (data) => {
@@ -8,15 +10,16 @@ export const PostForm = () => {
 
     return(
         <Container>
-            <form onSubmit={onSubmit}>
-            <div>
-                <input type="text"name="title" placeholder="Заголовок" />
-            </div>
-            <div>
-                <textarea type="text"name="body" placeholder="Текст" />
-            </div>
-            <button type="submit">Сохранить</button>
-        </form>
+            <Typo>Добавление нового поста</Typo>
+            <SC.Form onSubmit={onSubmit}>
+            <SC.Field>
+                <SC.Input type="text"name="title" placeholder="Заголовок" />
+            </SC.Field>
+            <SC.Field>
+                <SC.Textarea type="text"name="body" placeholder="Текст" rows={10} cols={30} />
+            </SC.Field>
+            <SC.Button type="submit">Сохранить</SC.Button>
+        </SC.Form>
         </Container>
         
     )
