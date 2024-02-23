@@ -8,6 +8,13 @@ export const getPosts = createAsyncThunk(
   },
 )
 
+export const getFreshPosts = createAsyncThunk(
+  'posts/fetchFreshPosts',
+  async (limit) => {
+    return await postsAPI.fetchFreshPosts(limit)
+  },
+)
+
 export const getPostById = createAsyncThunk(
   'posts/fetchbyId',
   async (postId) => {
@@ -24,7 +31,10 @@ const initialState = {
     post: null,
     loading: false
   },
-  freshPosts: null,
+  freshPosts: {
+    posts: null,
+    loading: false
+  },
 }
 
 export const postsSlice = createSlice({
@@ -37,9 +47,6 @@ export const postsSlice = createSlice({
     addPosts: (state, action) => {
         
     },  
-    getFreshPosts: (state) => {
-      state.freshPosts = state.posts.list.slice(0, 3)
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(getPosts.pending, (state) => {
@@ -50,6 +57,16 @@ export const postsSlice = createSlice({
     }).addCase(getPosts.fulfilled, (state, action) => {
       state.posts = {
         list: action.payload,
+        loading: false,
+      }
+    }).addCase(getFreshPosts.pending, (state) => {
+      state.freshPosts = {
+        posts: null,
+        loading: true,
+      }
+    }).addCase(getFreshPosts.fulfilled, (state, action) => {
+      state.freshPosts = {
+        posts: action.payload,
         loading: false,
       }
     }).addCase(getPostById.pending, (state) => {
@@ -66,6 +83,6 @@ export const postsSlice = createSlice({
   },
 })
 
-export const { setPosts, editPost, getPost, addPosts, getFreshPosts } = postsSlice.actions
+export const { setPosts, editPost, getPost, addPosts } = postsSlice.actions
 
 export default postsSlice.reducer

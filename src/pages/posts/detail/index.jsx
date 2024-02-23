@@ -11,13 +11,13 @@ import { getPostById } from "../../../redux/slices/postsSlice";
 export const DetailPostPage = () => {
     const { id } = useParams();
     const postForView = useSelector((state) => state.posts.postForView)
-    const dispatch = useDispatch()
-
-    const { post, loading } = postForView
+    const dispatch = useDispatch()        
 
     useEffect(() => {
         dispatch(getPostById(Number(id)))
     }, [id])
+
+    const { post, loading } = postForView    
 
     if (loading) {
         return <Container>
@@ -25,14 +25,16 @@ export const DetailPostPage = () => {
         </Container>
     }
 
-    if (!post) {
+    if (!post || !post.hasOwnProperty('id')) {
         return <>Пост не найден</>
     }
+
+    const image = post.image || 'https://img.freepik.com/premium-photo/fantasy-rainbow-landscape-beautiful-minimalist-rainbow-in-sky-illustration-generative-ai_691560-8602.jpg'
 
     return(
         <Container>
             <Typo>{post.title}</Typo>
-            {post.image && <SC.Image src={post.image} alt={post.title} />}            
+            <SC.Image src={image} alt={post.title} />            
             <SC.Text>{post.body}</SC.Text>
             <div style={{ clear: 'both'}} />
             <SC.LinkWrapper>
