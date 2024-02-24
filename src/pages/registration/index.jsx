@@ -4,18 +4,26 @@ import { Typo } from '../../components/ui/Typo'
 import { Form } from '../../components/ui/Form'
 import { Field } from '../../components/ui/Field'
 import { Input } from '../../components/ui/Input'
+import { useNavigate } from "react-router-dom";
 
 export const RegistrationPage = () => {
-    const [formValues, setFormValues] = useState({name: '', surname: '', email: '', password: ''})
+    const [formValues, setFormValues] = useState({name: '', surname: '', email: '', password: ''})    
 
     const disabled = !formValues.email || !formValues.password
+    const navigate = useNavigate()
+
 
     const onSubmit = (e) => {
         e.preventDefault() 
+
+        const userId = Date.now()
+        const newUser = {id: userId, ...formValues}
         try {
             const users = JSON.parse(localStorage.getItem('users'))
             if (!users) {
-                console.log('Добавляем нового')
+                localStorage.setItem('users', JSON.stringify([newUser]))
+                alert ('Вы успешно зарегистрировались')
+                navigate('/auth')
                 return
             }
 
@@ -24,8 +32,14 @@ export const RegistrationPage = () => {
                 return
             }
 
-        } catch {
+            users.push(newUser)
 
+            localStorage.setItem('users', JSON.stringify(users))
+            alert ('Вы успешно зарегистрировались')
+            navigate('/auth')
+
+        } catch(e) {
+            console.log(e)
         }
     }
 
