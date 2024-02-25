@@ -7,9 +7,9 @@ import { Input } from '../../components/ui/Input'
 import { useNavigate } from "react-router-dom";
 
 export const RegistrationPage = () => {
+    const disabled = !formValues.email || !formValues.password
     const navigate = useNavigate()
     const [formValues, setFormValues] = useState({name: '', surname: '', email: '', password: ''})
-    const disabled = !formValues.email || !formValues.password
 
 
     const onSubmit = (e) => {
