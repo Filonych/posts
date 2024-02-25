@@ -7,12 +7,15 @@ import { Input } from '../../components/ui/Input'
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
+import { Button } from "../../components/ui/Button";
+import { Modal } from "../../components/ui/Modal";
 
 export const AuthPage = () => {
     const navigate = useNavigate()
     const [formValues, setFormValues] = useState({email: '', password: ''})
     const disabled = !formValues.email || !formValues.password
     const dispatch = useDispatch()
+    const [showModal, setShowModal] = useState(false)
 
     const onSubmit = (e) => {
         e.preventDefault() 
@@ -20,14 +23,14 @@ export const AuthPage = () => {
         try {
             const users = JSON.parse(localStorage.getItem('users'))
             if (!users) {
-                alert ('Данный пользователь не найден')
+                setShowModal(true)
                 return
             }
     
             const currentUser = users.find((user) => user.email === formValues.email && user.password === formValues.password)
     
             if (!currentUser) {
-                alert ('Данный пользователь не найден')
+                setShowModal(true)
                 return
             }
     
@@ -48,6 +51,7 @@ export const AuthPage = () => {
 
     return (
         <Container>
+            {showModal && <Modal text='Данный пользователь не найден' buttons={<Button onClick={() => setShowModal(false)}>ОК</Button>}/>}
             <Typo>Страница авторизации</Typo>
             <Form onSubmit={onSubmit}> 
                 <Field>
@@ -66,7 +70,7 @@ export const AuthPage = () => {
                     placeholder="Пароль" 
                     onChange={(e) => onChange(e.target.name, e.target.value)}/>
                 </Field>
-                <button type="submit" disabled={disabled}>Авторизация</button>
+                <Button type="submit" disabled={disabled}>Авторизация</Button>
             </Form>
         </Container>
     )
