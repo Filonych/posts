@@ -8,7 +8,6 @@ export const EditPostPage = () => {
     const { id } = useParams()
     const dispatch = useDispatch()
     const { list } = useSelector((state) => state.posts.posts)
-    const { post } = useSelector((state) => state.posts.postForView)
 
     const intId = Number(id)
 
