@@ -5,11 +5,15 @@ import { Form } from '../../components/ui/Form'
 import { Field } from '../../components/ui/Field'
 import { Input } from '../../components/ui/Input'
 import { useNavigate } from "react-router-dom";
+import { Button } from "../../components/ui/Button";
+import { Modal } from "../../components/ui/Modal";
 
 export const RegistrationPage = () => {
     const navigate = useNavigate()
     const [formValues, setFormValues] = useState({name: '', surname: '', email: '', password: ''})
     const disabled = !formValues.email || !formValues.password
+    const [showModal, setShowModal] = useState(false)
+    const [modalText, setModalText] = useState('')
 
 
     const onSubmit = (e) => {
@@ -21,20 +25,23 @@ export const RegistrationPage = () => {
             const users = JSON.parse(localStorage.getItem('users'))
             if (!users) {
                 localStorage.setItem('users', JSON.stringify([newUser]))
-                alert ('Вы успешно зарегистрировались')
+                setModalText('Вы успешно зарегистрировались')
+                setShowModal(true)
                 navigate('/auth')
                 return
             }
 
             if (users.find((user) => user.email === formValues.email)) {
-                alert ('Пользователь с таким email уже существует')
+                setModalText('Пользователь с таким email уже существует')
+                setShowModal(true)
                 return
             }
 
             users.push(newUser)
 
             localStorage.setItem('users', JSON.stringify(users))
-            alert ('Вы успешно зарегистрировались')
+            setModalText('Вы успешно зарегистрировались')
+            setShowModal(true)
             navigate('/auth')
 
         } catch(e) {
@@ -48,6 +55,7 @@ export const RegistrationPage = () => {
 
     return (
         <Container>
+            {showModal && <Modal text={modalText} buttons={<Button onClick={() => setShowModal(false)}>ОК</Button>}/>}
             <Typo>Страница регистрации</Typo>
             <Form onSubmit={onSubmit}>
                 <Field>
@@ -82,7 +90,7 @@ export const RegistrationPage = () => {
                     placeholder="Пароль" 
                     onChange={(e) => onChange(e.target.name, e.target.value)}/>
                 </Field>
-                <button type="submit" disabled={disabled}>Регистрация</button>
+                <Button type="submit" disabled={disabled}>Регистрация</Button>
             </Form>
         </Container>
     )
