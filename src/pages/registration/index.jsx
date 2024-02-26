@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/ui/Button";
 import { Modal } from "../../components/ui/Modal";
 
+const SUCCESSED_TEXT = 'Вы успешно зарегистрировались'
+const FAILED_TEXT = 'Пользователь с таким email уже существует'
+
 export const RegistrationPage = () => {
     const navigate = useNavigate()
     const [formValues, setFormValues] = useState({name: '', surname: '', email: '', password: ''})
@@ -25,14 +28,13 @@ export const RegistrationPage = () => {
             const users = JSON.parse(localStorage.getItem('users'))
             if (!users) {
                 localStorage.setItem('users', JSON.stringify([newUser]))
-                setModalText('Вы успешно зарегистрировались')
+                setModalText(SUCCESSED_TEXT)
                 setShowModal(true)
-                navigate('/auth')
                 return
             }
 
             if (users.find((user) => user.email === formValues.email)) {
-                setModalText('Пользователь с таким email уже существует')
+                setModalText(FAILED_TEXT)
                 setShowModal(true)
                 return
             }
@@ -40,9 +42,8 @@ export const RegistrationPage = () => {
             users.push(newUser)
 
             localStorage.setItem('users', JSON.stringify(users))
-            setModalText('Вы успешно зарегистрировались')
-            setShowModal(true)
-            navigate('/auth')
+            setModalText(SUCCESSED_TEXT)
+            setShowModal(true)            
 
         } catch(e) {
             console.log(e)
@@ -53,9 +54,17 @@ export const RegistrationPage = () => {
         setFormValues({...formValues, [name]: value})
     }
 
+    const onHandleClose = () => {
+        if (modalText === SUCCESSED_TEXT) {
+            navigate('/auth')
+
+        }
+        setShowModal(false)
+    }
+
     return (
         <Container>
-            {showModal && <Modal text={modalText} buttons={<Button onClick={() => setShowModal(false)}>ОК</Button>}/>}
+            {showModal && <Modal text={modalText} buttons={<Button onClick={() => onHandleClose()}>ОК</Button>}/>}
             <Typo>Страница регистрации</Typo>
             <Form onSubmit={onSubmit}>
                 <Field>
