@@ -13,6 +13,7 @@ import {
 } from "../../../redux/slices/postsSlice";
 import { Button } from "../../../components/ui/Button";
 import { Modal } from "../../../components/ui/Modal";
+import { Loader } from "../../../components/ui/Loader";
 
 export const DetailPostPage = () => {
   const { id } = useParams();
@@ -49,7 +50,7 @@ export const DetailPostPage = () => {
   const { post, loading } = postForView;
 
   if (loading) {
-    return <Container>Loading...</Container>;
+    return <Loader/>;
   }
 
   if (!post || !post.hasOwnProperty("id")) {
