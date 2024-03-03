@@ -36,7 +36,6 @@ export const AuthPage = () => {
     
             dispatch(login(currentUser))
             navigate('/')
-            console.log(currentUser)
     
         } catch(e) {
             console.log(e)
