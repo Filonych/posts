@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../redux/slices/postsSlice";
 import { Loader } from "../../components/ui/Loader";
 import { Pagination } from "../../components/ui/Pagination";
+import { Filter } from "../../components/ui/Filter";
 
 export const PostsPage = () => {
   const { list, loading } = useSelector((state) => state.posts.posts);
@@ -30,6 +31,7 @@ export const PostsPage = () => {
     <>
       <Typo>Публикации</Typo>
       <Container>
+        <Filter />
         <Posts posts={list} />
         <Pagination />
       </Container>
