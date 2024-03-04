@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../redux/slices/postsSlice";
 import { Loader } from "../../components/ui/Loader";
 import { Pagination } from "../../components/ui/Pagination";
-import { Filter } from "../../components/ui/Filter";
+import { Filter } from "../../components/Posts/components/Filter";
 
 export const PostsPage = () => {
   const { list, loading } = useSelector((state) => state.posts.posts);
@@ -16,8 +16,9 @@ export const PostsPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getPosts({searchValue, currentPage, sort}));
-  }, [searchValue, currentPage, sort, dispatch]);
+    dispatch(getPosts({ searchValue, currentPage, sort }));
+    console.log('проверка')
+  }, [searchValue, currentPage, sort]);
 
   if (!list && loading) {
     return <Loader />;

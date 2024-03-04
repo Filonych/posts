@@ -32,6 +32,7 @@ const initialState = {
     posts: null,
     loading: false,
   },
+  totalCount: 0
 };
 
 export const postsSlice = createSlice({
@@ -82,9 +83,10 @@ export const postsSlice = createSlice({
       })
       .addCase(getPosts.fulfilled, (state, action) => {
         state.posts = {
-          list: action.payload,
+          list: action.payload.posts,
           loading: false,
         };
+        state.totalCount = action.payload.totalCount
       })
       .addCase(getFreshPosts.pending, (state) => {
         state.freshPosts = {
@@ -109,7 +111,7 @@ export const postsSlice = createSlice({
           post: action.payload,
           loading: false,
         };
-      });
+      })
   },
 });
 

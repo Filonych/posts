@@ -12,4 +12,8 @@ export const Page = styled.div`
   &:hover {
     color: #21a6b7;
   }
+
+  &.active {
+    color: #00bcd4;
+  }
 `

@@ -1,11 +1,13 @@
 export const postsAPI = {
-  fetchPosts(searchValue, currentPage, sort = 'id&_order=desc') {
+  fetchPosts(searchValue, currentPage, sort) {
     try {
       return fetch(
         `https://jsonplaceholder.typicode.com/posts/?_sort=${sort}&title_like=${searchValue}&_page=${currentPage}`
       )
-        .then((response) => response.json())
-        .then((posts) => posts);
+        .then((response) => {
+          const totalCount = response.headers.get('X-Total-Count');
+          return response.json().then(posts => ({ posts, totalCount }));
+        });
     } catch (ex) {
       console.log(ex);
     }
