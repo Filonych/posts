@@ -10,22 +10,22 @@ import { Filter } from "../../components/ui/Filter";
 
 export const PostsPage = () => {
   const { list, loading } = useSelector((state) => state.posts.posts);
+  const { searchValue, currentPage, sort } = useSelector(
+    (state) => state.filter.filter
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!list) {
-      dispatch(getPosts());
-    }    
-  }, []);
+    dispatch(getPosts({searchValue, currentPage, sort}));
+  }, [searchValue, currentPage, sort, dispatch]);
 
   if (!list && loading) {
-    return <Loader />
+    return <Loader />;
   }
 
   if (!list) {
-    return <Container>Error 404</Container>
+    return <Container>Error 404</Container>;
   }
-  console.log(list)
 
   return (
     <>

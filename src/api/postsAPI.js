@@ -1,8 +1,8 @@
 export const postsAPI = {
-  fetchPosts(page) {
+  fetchPosts(searchValue, currentPage, sort = 'id&_order=desc') {
     try {
       return fetch(
-        `https://jsonplaceholder.typicode.com/posts/?_sort=id&_order=desc&_limit=10&title_like=dolor&_page=${page}`
+        `https://jsonplaceholder.typicode.com/posts/?_sort=${sort}&title_like=${searchValue}&_page=${currentPage}`
       )
         .then((response) => response.json())
         .then((posts) => posts);

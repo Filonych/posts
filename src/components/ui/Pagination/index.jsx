@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import { getPosts } from "../../../redux/slices/postsSlice";
 import * as SC from "./styles";
+import { setCurrentPage } from "../../../redux/slices/filterSlice";
 
 export const Pagination = () => {    
   const pagination = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -8,7 +8,7 @@ export const Pagination = () => {
   const dispatch = useDispatch();
 
   const changeCurrentPage = (page) => {
-    dispatch(getPosts(page));
+    dispatch(setCurrentPage(page));
   };
 
   return (
