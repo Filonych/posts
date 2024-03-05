@@ -5,20 +5,24 @@ import { Typo } from "../../components/ui/Typo";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../redux/slices/postsSlice";
 import { Loader } from "../../components/ui/Loader";
-import { Pagination } from "../../components/ui/Pagination";
-import { Filter } from "../../components/Posts/components/Filter";
+import { Pagination } from "../../components/Pagination";
+import { Search } from "../../components/Posts/components/Search";
+import { Sorting } from "../../components/Posts/components/Sorting";
+import * as SC from "./styles";
 
 export const PostsPage = () => {
   const { list, loading } = useSelector((state) => state.posts.posts);
   const { searchValue, currentPage, sort } = useSelector(
     (state) => state.filter.filter
   );
+  const filter = useSelector((state) => state.filter.filter);
+
+  console.log(filter)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getPosts({ searchValue, currentPage, sort }));
-    console.log('проверка')
-  }, [searchValue, currentPage, sort]);
+  }, [searchValue, currentPage, sort, dispatch]);
 
   if (!list && loading) {
     return <Loader />;
@@ -32,7 +36,10 @@ export const PostsPage = () => {
     <>
       <Typo>Публикации</Typo>
       <Container>
-        <Filter />
+        <SC.Wrap>
+          <Search />
+          <Sorting />
+        </SC.Wrap>
         <Posts posts={list} />
         <Pagination />
       </Container>

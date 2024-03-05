@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import * as SC from "./styles";
-import { setCurrentPage } from "../../../redux/slices/filterSlice";
+import { setCurrentPage } from "../../redux/slices/filterSlice";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -23,7 +23,11 @@ export const Pagination = () => {
   return (
     <SC.Wrap>
       {pagination.map((page) => (
-        <SC.Page key={page} onClick={() => changeCurrentPage(page)} className={ currentPage === page ? 'active' : undefined}>
+        <SC.Page
+          key={page}
+          onClick={() => changeCurrentPage(page)}
+          className={currentPage === page ? "active" : undefined}
+        >
           {page}
         </SC.Page>
       ))}
