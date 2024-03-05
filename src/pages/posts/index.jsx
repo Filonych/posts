@@ -6,26 +6,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../redux/slices/postsSlice";
 import { Loader } from "../../components/ui/Loader";
 import { Pagination } from "../../components/ui/Pagination";
-import { Filter } from "../../components/ui/Filter";
+import { Filter } from "../../components/Posts/components/Filter";
 
 export const PostsPage = () => {
   const { list, loading } = useSelector((state) => state.posts.posts);
+  const { searchValue, currentPage, sort } = useSelector(
+    (state) => state.filter.filter
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!list) {
-      dispatch(getPosts());
-    }    
-  }, []);
+    dispatch(getPosts({ searchValue, currentPage, sort }));
+    console.log('проверка')
+  }, [searchValue, currentPage, sort]);
 
   if (!list && loading) {
-    return <Loader />
+    return <Loader />;
   }
 
   if (!list) {
-    return <Container>Error 404</Container>
+    return <Container>Error 404</Container>;
   }
-  console.log(list)
 
   return (
     <>
