@@ -15,9 +15,6 @@ export const PostsPage = () => {
   const { searchValue, currentPage, sort } = useSelector(
     (state) => state.filter.filter
   );
-  const filter = useSelector((state) => state.filter.filter);
-
-  console.log(filter)
   const dispatch = useDispatch();
 
   useEffect(() => {
