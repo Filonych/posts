@@ -3,22 +3,28 @@ import {
   setCurrentPage,
   setSearchValue,
 } from "../../../../redux/slices/filterSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "../../../ui/Input";
-import debounce from 'lodash.debounce';
 
 export const Search = () => {
   const dispatch = useDispatch();
-  const { searchValue } = useSelector(
-    (state) => state.filter.filter)
+  const { searchValue } = useSelector((state) => state.filter.filter);
 
-  const [inputValue, setInputValue] = useState(searchValue);
+  const [inputValue, setInputValue] = useState("");
+  const [debouncedValue, setDebouncedValue] = useState("");
 
-  const updateSearchValue =     
-    debounce((str) => {
-      dispatch(setCurrentPage(1));
-      dispatch(setSearchValue(str));
-    }, 150)
+  useEffect(() => {
+    dispatch(setCurrentPage(1));
+    dispatch(setSearchValue(inputValue));
+    
+  }, [debouncedValue]);
+
+  const updateSearchValue = () => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedValue(inputValue);
+    }, 1000);
+    return () => clearTimeout(timeoutId);
+  }
 
   const onChangeInput = (event) => {
     setInputValue(event.target.value);
@@ -26,13 +32,9 @@ export const Search = () => {
   };
 
   return (
-      <div>
-        <h3>Фильтрация</h3>
-        <Input
-          type="text"
-          value={inputValue}
-          onChange={onChangeInput}
-        />
-      </div>
+    <div>
+      <h3>Фильтрация</h3>
+      <Input type="text" value={inputValue} onChange={onChangeInput} />
+    </div>
   );
 };
