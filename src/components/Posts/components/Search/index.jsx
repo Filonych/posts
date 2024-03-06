@@ -1,8 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setCurrentPage,
-  setSearchValue,
-} from "../../../../redux/slices/filterSlice";
+import { setSearchValue } from "../../../../redux/slices/filterSlice";
 import { useEffect, useState } from "react";
 import { Input } from "../../../ui/Input";
 
@@ -10,13 +7,11 @@ export const Search = () => {
   const dispatch = useDispatch();
   const { searchValue } = useSelector((state) => state.filter.filter);
 
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(searchValue);
   const [debouncedValue, setDebouncedValue] = useState("");
 
   useEffect(() => {
-    dispatch(setCurrentPage(1));
     dispatch(setSearchValue(inputValue));
-    
   }, [debouncedValue]);
 
   const updateSearchValue = () => {
@@ -24,7 +19,7 @@ export const Search = () => {
       setDebouncedValue(inputValue);
     }, 1000);
     return () => clearTimeout(timeoutId);
-  }
+  };
 
   const onChangeInput = (event) => {
     setInputValue(event.target.value);

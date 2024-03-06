@@ -19,7 +19,7 @@ export const PostsPage = () => {
 
   useEffect(() => {
     dispatch(getPosts({ searchValue, currentPage, sort }));
-  }, [searchValue, currentPage, sort, dispatch]);
+  }, [searchValue, currentPage, sort]);
 
   if (!list && loading) {
     return <Loader />;
