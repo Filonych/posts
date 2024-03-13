@@ -1,9 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { postsAPI } from "../../api/postsAPI";
 
-export const getPosts = createAsyncThunk("posts/fetchPosts", async ({searchValue, currentPage, sort}) => {
-  return await postsAPI.fetchPosts(searchValue, currentPage, sort);
-});
+export const getPosts = createAsyncThunk(
+  "posts/fetchPosts",
+  async ({ searchValue, currentPage, sort }) => {
+    return await postsAPI.fetchPosts(searchValue, currentPage, sort);
+  }
+);
 
 export const getFreshPosts = createAsyncThunk(
   "posts/fetchFreshPosts",
@@ -16,6 +19,13 @@ export const getPostById = createAsyncThunk(
   "posts/fetchbyId",
   async (postId) => {
     return await postsAPI.fetchbyId(postId);
+  }
+);
+
+export const addPost = createAsyncThunk(
+  "posts/fetchNewPost",
+  async ({ title, body }) => {
+    return await postsAPI.fetchNewPost(title, body);
   }
 );
 
@@ -32,7 +42,7 @@ const initialState = {
     freshPosts: null,
     loading: false,
   },
-  totalCount: 0
+  totalCount: 0,
 };
 
 export const postsSlice = createSlice({
@@ -48,14 +58,14 @@ export const postsSlice = createSlice({
       });
       state.freshPosts.freshPosts = state.posts.list.slice(0, 3);
     },
-    addPost: (state, action) => {
-      const newPost = { ...action.payload };
-      newPost.id = new Date().getTime();
-      state.posts.list = state.posts.list
-        ? [newPost, ...state.posts.list]
-        : [newPost];
-      state.freshPosts.freshPosts = state.posts.list.slice(0, 3);
-    },
+    // addPost: (state, action) => {
+    //   const newPost = { ...action.payload };
+    //   newPost.id = new Date().getTime();
+    //   state.posts.list = state.posts.list
+    //     ? [newPost, ...state.posts.list]
+    //     : [newPost];
+    //   state.freshPosts.freshPosts = state.posts.list.slice(0, 3);
+    // },
     showPost: (state, action) => {
       state.postForView = {
         post: action.payload,
@@ -86,7 +96,7 @@ export const postsSlice = createSlice({
           list: action.payload.posts,
           loading: false,
         };
-        state.totalCount = action.payload.totalCount
+        state.totalCount = action.payload.totalCount;
       })
       .addCase(getFreshPosts.pending, (state) => {
         state.freshPosts = {
@@ -112,9 +122,14 @@ export const postsSlice = createSlice({
           loading: false,
         };
       })
+      .addCase(addPost.fulfilled, (state, action) => {
+        const newPost = { ...action.payload };
+        state.posts.list = [newPost, ...state.posts.list];
+        state.freshPosts.freshPosts = state.posts.list.slice(0, 3);
+      });
   },
 });
 
-export const { editPost, addPost, showPost, deletePost } = postsSlice.actions;
+export const { editPost, showPost, deletePost } = postsSlice.actions;
 
 export default postsSlice.reducer;

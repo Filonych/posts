@@ -3,11 +3,10 @@ export const postsAPI = {
     try {
       return fetch(
         `https://jsonplaceholder.typicode.com/posts/?_sort=${sort}&title_like=${searchValue}&_page=${currentPage}`
-      )
-        .then((response) => {
-          const totalCount = response.headers.get('X-Total-Count');
-          return response.json().then(posts => ({ posts, totalCount }));
-        });
+      ).then((response) => {
+        const totalCount = response.headers.get("X-Total-Count");
+        return response.json().then((posts) => ({ posts, totalCount }));
+      });
     } catch (ex) {
       console.log(ex);
     }
@@ -33,6 +32,25 @@ export const postsAPI = {
       return fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
         .then((response) => response.json())
         .then((post) => post);
+    } catch (ex) {
+      console.log(ex);
+    }
+  },
+
+  fetchNewPost(title, body) {
+    try {
+      return fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: "POST",
+        body: JSON.stringify({
+          title,
+          body,
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((newPost) => newPost);
     } catch (ex) {
       console.log(ex);
     }

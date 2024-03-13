@@ -10,7 +10,8 @@ export const AddPostPage = () => {
   const dispatch = useDispatch();
 
   const onSubmitForm = (formValues) => {
-    setShowModal(true)
+    console.log(formValues)
+    // setShowModal(true)
     dispatch(addPost(formValues))
     
   };
