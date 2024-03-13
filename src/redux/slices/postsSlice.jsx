@@ -29,7 +29,7 @@ const initialState = {
     loading: false,
   },
   freshPosts: {
-    posts: null,
+    freshPosts: null,
     loading: false,
   },
   totalCount: 0
@@ -46,7 +46,7 @@ export const postsSlice = createSlice({
         }
         return post;
       });
-      state.freshPosts.posts = state.posts.list.slice(0, 3);
+      state.freshPosts.freshPosts = state.posts.list.slice(0, 3);
     },
     addPost: (state, action) => {
       const newPost = { ...action.payload };
@@ -54,7 +54,7 @@ export const postsSlice = createSlice({
       state.posts.list = state.posts.list
         ? [newPost, ...state.posts.list]
         : [newPost];
-      state.freshPosts.posts = state.posts.list.slice(0, 3);
+      state.freshPosts.freshPosts = state.posts.list.slice(0, 3);
     },
     showPost: (state, action) => {
       state.postForView = {
@@ -70,7 +70,7 @@ export const postsSlice = createSlice({
         post: null,
         loading: false,
       };
-      state.freshPosts.posts = state.posts.list.slice(0, 3);
+      state.freshPosts.freshPosts = state.posts.list.slice(0, 3);
     },
   },
   extraReducers: (builder) => {
@@ -90,13 +90,13 @@ export const postsSlice = createSlice({
       })
       .addCase(getFreshPosts.pending, (state) => {
         state.freshPosts = {
-          posts: null,
+          freshPosts: null,
           loading: true,
         };
       })
       .addCase(getFreshPosts.fulfilled, (state, action) => {
         state.freshPosts = {
-          posts: action.payload,
+          freshPosts: action.payload,
           loading: false,
         };
       })

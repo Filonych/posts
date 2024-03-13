@@ -1,6 +1,8 @@
 import React from "react";
-import * as SC from './styles'
+import * as SC from "./styles";
 
-export const Loader = () => <><SC.LoaderWrap>
-        <SC.Loader></SC.Loader>
-    </SC.LoaderWrap></>
+export const Loader = () => (
+  <SC.LoaderWrap>
+    <SC.Loader />
+  </SC.LoaderWrap>
+);

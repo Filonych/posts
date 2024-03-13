@@ -8,23 +8,23 @@ import { Loader } from "../../components/ui/Loader";
 
 export const MainPage = () => {
   const postForView = useSelector((state) => state.posts.postForView);
-  const { posts, loading } = useSelector((state) => state.posts.freshPosts);
+  const { freshPosts, loading } = useSelector((state) => state.posts.freshPosts);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!posts) {
+    if (!freshPosts) {
       dispatch(getFreshPosts());
     }
-  }, [posts, dispatch]);
+  }, [freshPosts, dispatch]);
 
   return (
     <>
       <Container>
         {loading && <Loader />}
-        {posts && (
+        {freshPosts && (
           <>
             <Typo>Свежие публикации</Typo>
-            <Posts posts={posts} />
+            <Posts posts={freshPosts} />
           </>
         )}
 
